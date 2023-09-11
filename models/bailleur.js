@@ -8,11 +8,12 @@ const bailleurSchema = Schema({
     société : {type: String, default:"No found"},
     fonction : {type: String, required: true},
     ville : {type: String, required: true},
+    password: {type:String, required:true},
     pays : {type: String, required: true},
     projet: {
         type: [
             {
-                type: Schema.Type.objectId,
+                type: Schema.Types.ObjectId,
                 ref: "projet"
             }
         ]

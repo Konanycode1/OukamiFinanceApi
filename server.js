@@ -5,7 +5,10 @@ import { connectDB } from "./config/db.js";
 import path from 'path'
 import { fileURLToPath } from 'url';
 import { config } from "dotenv";
+import RouterBail from "./router/bailleur.js";
+
 const  app = express();
+
 
 config({
     path:path.join(process.cwd(),'.env')
@@ -20,6 +23,7 @@ app.use(express.json());
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 app.use("/images" ,express.static( path.join(__dirname,'images') ))
 
+app.use("/api", RouterBail)
 let port = process.env.PORT || 3000
 connectDB()
 .then(()=>{
