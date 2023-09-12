@@ -6,7 +6,7 @@ import jwt  from "jsonwebtoken";
  * @returns 
  */
 
-export const token = (user)=>{
+export const tokenSend = (user)=>{
     try {
         const JWT_SECRET = process.env.JWT_SECRET;
         if(!JWT_SECRET) throw new Error("Code sécret introuvable !!!")

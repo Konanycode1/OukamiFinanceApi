@@ -5,7 +5,7 @@ const bailleurSchema = Schema({
     prenom : {type: String, required: true},
     numero : {type: String, required: true},
     email : {type: String, required: true},
-    société : {type: String, default:"No found"},
+    societe : {type: String, default:"No found"},
     fonction : {type: String, required: true},
     ville : {type: String, required: true},
     password: {type:String, required:true},

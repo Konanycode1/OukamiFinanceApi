@@ -10,5 +10,6 @@ const ajoutSchema = Schema({
     budget:{type:String, required:true},
     durerProjet: {type:String, required:true},
     image:{type:String, required:true},
+    statut: {type:String, default: false}
 })
 export default model("projet",ajoutSchema)

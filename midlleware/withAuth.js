@@ -9,13 +9,13 @@ import Express  from "express";
  * @returns 
  */
 export  const auth = (req,res, next)=>{
-    let cookies = req.cookies.token;
-    let verify = verifyToken(cookies);
+    let token = req.cookies.token;
+    let verify = verifyToken(token);
     if(verify){
         req.user = verify;
     }
     else{
         return res.redirect = "/login";
     }
-
+    next();
 }
