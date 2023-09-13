@@ -40,8 +40,10 @@ class Bailleur {
     }
     static async editeBail(req, res){
         try {
-            let {id} = req.param
+            const {id} = req.params
             const {_id}= req.user
+            console.log("id:",id)
+            console.log("_id:",_id)
             if(id !== _id) return res.status(400).json({status:false,message:"utilisateur incorrect"})
             let bail = await bailleur.findOne({_id})
             if(bail){
@@ -54,7 +56,7 @@ class Bailleur {
                     })
                     return
                 }
-                await bail.update({...body})
+                await bail.updateOne({...body})
                 res.status(201).json({
                     status: true,
                     message: "Compte modifié !!!"
@@ -76,10 +78,10 @@ class Bailleur {
     }
     static async Delete(req, res){
         try {
-            let {id} = req.param
+            let {id} = req.params
             const {_id}= req.user
             if(id !== _id) return res.status(400).json({status:false,message:"utilisateur incorrect"})
-            const user = bailleur.findOne({_id:id});
+            const user = await bailleur.findOne({_id:id});
             if(!user){
                 res
                 .status(400)
@@ -89,7 +91,7 @@ class Bailleur {
                 })
                 return
             }
-            await user.delete({_id:id})
+            await user.deleteOne({_id:_id})
             res
             .status(201)
             .json({
@@ -151,7 +153,7 @@ class Bailleur {
         try {
 
             let {id} = req.user;
-            const {idProj} = req.param
+            const {idProj} = req.params
             if(id !== idProj) return res.status(400).json({status:false,message:"utilisateur incorrect"})
             const user = await bailleur.findOne({_id: id});
             if(!user){

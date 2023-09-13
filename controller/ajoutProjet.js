@@ -26,7 +26,12 @@ class AjoutProjet{
     }
     static async allProjet(req,res){
         try {
-            return  await ajoutProjet.find(); 
+             const projet = await ajoutProjet.find(); 
+             res.status(201)
+                .json({
+                    status: true,
+                    message:projet 
+                })
         } catch (e) {
             res.status(500)
                 .json({
@@ -37,8 +42,14 @@ class AjoutProjet{
     }
     static async ProjetById(req,res){
         try {
-            const {id} = req.param;
-            return  await ajoutProjet.findById(id); 
+            const {id} = req.params;
+            let projet = await ajoutProjet.findById(id);
+            res.status(201)
+            .json({
+                status: true,
+                message:projet 
+            })
+
         } catch (e) {
             if( e instanceof MongooseError) throw new Error("Erreur de server Mongose:",e.message)
             res.status(500)
@@ -50,8 +61,13 @@ class AjoutProjet{
     }
     static async ProjetByStatut(req,res){
         try {
-            const {statut} = req.param;
-            return  await ajoutProjet.findById(statut); 
+            const {statut} = req.params;
+           let projet =  await ajoutProjet.findOne({statut}); 
+            res.status(201)
+            .json({
+                status: true,
+                message:projet 
+            })
         } catch (e) {
             if( e instanceof MongooseError) throw new Error("Erreur de server Mongose:",e.message)
             res.status(500)

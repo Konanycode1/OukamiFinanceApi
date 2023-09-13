@@ -1,3 +1,4 @@
+import { MongooseError } from "mongoose";
 import ajoutProjet from "../models/ajoutProjet.js";
 import bailleur from "../models/bailleur.js";
 import { tokenSend } from "../utils/token.js";
@@ -8,19 +9,21 @@ class Admin{
         try {
             const {user,password} = req.body;
             if(user.toLowerCase() == "admin"  && password == "admin"){
-                res.cookie("admin", tokenSend(user));
-                res.status(200).
-                json({
+                res.cookie("admin", "admin");
+                res.status(200)
+                .json({
                     status:true,
                     message:"connexion encours"
                 });
+                return
             }
             else{
-            res.status(404)
-            .json({
-                status:false,
-                message:"Identifiant incorrecte"
-            }) 
+                res.status(404)
+                .json({
+                    status:false,
+                    message:"Identifiant incorrecte"
+                }) 
+                return
             }
             
         } catch (e) {
@@ -37,7 +40,12 @@ class Admin{
         try {
             const {_id}= req.user
             if(!_id) return res.status(400).json({status:false,message:"utilisateur incorrect"})
-            return await bailleur.find();
+            const liste = await bailleur.find();
+            res.status(201)
+            .json({
+                status:true,
+                message:liste
+            })
         } catch (e) {
             if( e instanceof MongooseError) throw new Error("Erreur de server Mongose:",e.message)
             res.status(500)
@@ -49,10 +57,15 @@ class Admin{
     }
     static async listeBailleurById(req,res){
         try {
-            let {id} = req.param
+            let {id} = req.params
             const {_id}= req.user
             if(id !== _id) return res.status(400).json({status:false,message:"utilisateur incorrect"})
-            return await bailleur.findById(_id);
+           let liste = await bailleur.findById(_id);
+            res.status(201)
+            .json({
+                status:true,
+                message:liste
+            })
         } catch (e) {
             if( e instanceof MongooseError) throw new Error("Erreur de server Mongose:",e.message)
             res.status(500)

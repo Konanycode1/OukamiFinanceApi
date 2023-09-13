@@ -6,6 +6,8 @@ import path from 'path'
 import { fileURLToPath } from 'url';
 import { config } from "dotenv";
 import RouterBail from "./router/bailleur.js";
+import RouterProj from "./router/ajoutProjet.js";
+import RouterAdmin from "./router/admin.js";
 
 const  app = express();
 
@@ -23,8 +25,9 @@ app.use(cookieParser());
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 app.use("/images" ,express.static( path.join(__dirname,'images') ))
-
-app.use("/api", RouterBail)
+app.use("/api", RouterBail);
+app.use("/api", RouterProj);
+app.use("/api", RouterAdmin);
 let port = process.env.PORT || 3000
 connectDB()
 .then(()=>{
