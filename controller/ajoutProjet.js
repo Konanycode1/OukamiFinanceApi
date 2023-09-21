@@ -5,6 +5,7 @@ import ajoutProjet from "../models/ajoutProjet.js";
 class AjoutProjet{
     static async createProjet(req, res){
         try {
+            // console.log(req.body)
             const {image, ...body} = req.body;
             await ajoutProjet.create({
                 image: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
