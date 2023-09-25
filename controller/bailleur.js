@@ -149,6 +149,7 @@ class Bailleur {
             })
         }
     }
+
     static async validateProjet(req,res){
         try {
 
