@@ -9,7 +9,8 @@ import Express  from "express";
  * @returns 
  */
 export  const auth = (req,res, next)=>{
-    let token = req.cookies.token;
+    let token = req.headers.authorization.split(' ')[1];
+    console.log(token)
     let verify = verifyToken(token);
     if(verify){
         req.user = verify;

@@ -42,8 +42,6 @@ class Bailleur {
         try {
             const {id} = req.params
             const {_id}= req.user
-            console.log("id:",id)
-            console.log("_id:",_id)
             if(id !== _id) return res.status(400).json({status:false,message:"utilisateur incorrect"})
             let bail = await bailleur.findOne({_id})
             if(bail){
@@ -109,6 +107,7 @@ class Bailleur {
         }
         
     }
+
     static async login(req, res){
         try {
             const {email, password} = req.body;
@@ -121,22 +120,24 @@ class Bailleur {
                     })
                 return; 
             }
-            console.log(bail.password)
-            const userBail = bailleur.findOne({password: await compar(password, bail.password)});
-            if(!userBail){
-                res
+            const verifPass = await compar(password,bail.password);
+            if(  !verifPass ){
+                res 
                     .status(401)
                     .json({
                         status: false,
                         message: "Mot de passe incorrect !!!"
                     })
+                    return;
             }
-            res.cookie("token", tokenSend(bail.toObject()))
+            const gene = tokenSend(bail.toObject())
+            // res.cookie("token", tokenSend(bail.toObject()))
             res
             .status(201)
             .json({
                 status: true,
-                message: "Connexion encours !!!"
+                message: "Connexion encours !!!",
+                token:gene
             })
 
         } catch (e) {
@@ -189,6 +190,30 @@ class Bailleur {
         }
        
 
+    }
+
+    static async getBailleur(req,res){
+        try {
+            const {_id}= req.user;
+            let bai = await bailleur.findOne({_id})
+           
+                res 
+                .status(201)
+                .json({
+                    status: true,
+                    message: bai
+                })
+                return;
+        } catch (e) {
+            if( e instanceof MongooseError) throw new Error("Erreur de server Mongose:",e.message)
+            res
+            .status(500)
+            .json({
+                status: false,
+                message: e.message
+            })
+        }
+       
     }
 
 }
