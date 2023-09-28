@@ -154,10 +154,9 @@ class Bailleur {
     static async validateProjet(req,res){
         try {
 
-            let {id} = req.user;
+            let {_id} = req.user;
             const {idProj} = req.params
-            if(id !== idProj) return res.status(400).json({status:false,message:"utilisateur incorrect"})
-            const user = await bailleur.findOne({_id: id});
+            const user = await bailleur.findOne({_id: _id});
             if(!user){
                 res.status(401)
                 .json({
