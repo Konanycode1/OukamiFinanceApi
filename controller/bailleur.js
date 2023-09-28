@@ -172,7 +172,7 @@ class Bailleur {
                     message: "Projet encours de Financement !!"
                 })
             }
-            await ajout.updateOne({statut:true})
+            await ajout.updateOne({statut:true, finance:user._id})
             res.status(201)
                 .json({
                     status: true,

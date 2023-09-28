@@ -8,5 +8,6 @@ RouterProj.post("/ajout",AjoutMulter.single('image'), AjoutProjet.createProjet);
 RouterProj.get("/projetById/:id", AjoutProjet.ProjetById);
 RouterProj.get('/projetAll', AjoutProjet.allProjet);
 RouterProj.get('/projetStatut/:statut', AjoutProjet.ProjetByStatut);
+RouterProj.get('/projetFinance/:id', AjoutProjet.ProjetByFinance);
 
 export default RouterProj;
