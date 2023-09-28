@@ -11,6 +11,11 @@ const ajoutSchema = Schema({
     durerProjet: {type:String, required:true},
     image:{type:String, required:true},
     numeroTeleDecla:{type:String, required:true},
-    statut: {type:String, default: false}
+    date: {type:Date, default:Date.now()},
+    statut: {type:String, default: false},
+    finance: {
+        type: Schema.Types.ObjectId,
+        default: null
+    }
 })
 export default model("projet",ajoutSchema)

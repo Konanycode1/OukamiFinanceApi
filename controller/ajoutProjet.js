@@ -78,6 +78,24 @@ class AjoutProjet{
                 })
         }
     }
+    static async ProjetByFinance(req,res){
+        try {
+            const {id} = req.params;
+           let projet =  await ajoutProjet.find({finance:id}); 
+            res.status(201)
+            .json({
+                status: true,
+                message:projet 
+            })
+        } catch (e) {
+            if( e instanceof MongooseError) throw new Error("Erreur de server Mongose:",e.message)
+            res.status(500)
+                .json({
+                    status: false,
+                    message: e.message
+                })
+        }
+    }
    
 }
 export default AjoutProjet;
